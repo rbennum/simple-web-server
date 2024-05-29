@@ -1,7 +1,7 @@
 use std::net::TcpListener;
-use std::io::{ Read, Write };
+use std::io::Read;
 use std::convert::TryFrom;
-use crate::http::{ request, ParseError, Request, Response, StatusCode };
+use crate::http::{ ParseError, Request, Response, StatusCode };
 
 pub trait Handler {
     fn handle_request(&mut self, request: &Request) -> Response;

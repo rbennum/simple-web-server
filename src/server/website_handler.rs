@@ -1,5 +1,5 @@
 use super::server::Handler;
-use crate::http::{ Request, Response, StatusCode, Method };
+use crate::http::{ Response, StatusCode, Method };
 use std::fs;
 
 pub struct WebsiteHandler {
