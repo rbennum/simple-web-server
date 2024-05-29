@@ -6,10 +6,37 @@ use std::str::Utf8Error;
 use super::method::{Method, MethodError};
 use super::QueryString;
 
+#[derive(Debug)]
 pub struct Request<'buf> {
     path: &'buf str,
     query_string: Option<QueryString<'buf>>,
     method: Method,
+}
+
+impl<'buf> Request<'buf> {
+    pub fn path(&self) -> &str {
+        &self.path
+    }
+
+    pub fn method(&self) -> &Method {
+        &self.method
+    }
+
+    /*
+        Initially we can just go on with this kind of getter:
+
+        pub fn query_string(&self) -> &Option<QueryString> {
+            &self.query_string
+        }
+
+        but this is not good since we have to retain the reference to the
+        Option, not what's inside it. So with the help of `as_ref()`, we can
+        still return an Option but the generic may contain only the reference
+        of it.
+     */
+    pub fn query_string(&self) -> Option<&QueryString> {
+        self.query_string.as_ref()
+    }
 }
 
 impl<'buf> TryFrom<&'buf [u8]> for Request<'buf> {
